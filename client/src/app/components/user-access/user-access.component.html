@@ -1,0 +1,143 @@
+<body>
+	<div class="main">  	
+		<input type="checkbox" id="chk" aria-hidden="true">
+
+			<div class="signup">
+				<form (ngSubmit)="signUp()" [formGroup]="signUpForm">
+					<label for="chk" aria-hidden="true">Sign up</label>
+					<input
+					type="text"
+					placeholder="Enter full name"
+					name="fullName"
+					formControlName="fullName"
+					/>
+					<span
+                    class="text-danger"
+                        *ngIf="
+                        signUpSubmitted &&
+                        signUpForm.controls['fullName'].errors &&
+                        signUpForm.controls['fullName'].errors['required']
+                        "
+                    >
+                        full name is required
+					</span>
+
+					<input
+					type="email"
+					placeholder="Enter email"
+					name="email"
+					formControlName="email"
+					(keyup)="changeSignUpInput()"
+					/>
+					<span
+                        class="text-danger"
+                        *ngIf="
+                        signUpSubmitted &&
+                        signUpForm.controls['email'].errors &&
+                        signUpForm.controls['email'].errors['required']
+                        "
+                    >
+                        email is required.
+					</span>
+					<span
+                        class="text-danger"
+                        *ngIf="
+                        signUpSubmitted &&
+                        signUpForm.controls['email'].errors &&
+                        signUpForm.controls['email'].errors['email']
+                        "
+                    >
+            Enter a valid email.
+					</span>
+
+					<input
+					type="password"
+					placeholder="Password"
+					name="password"
+					formControlName="password"
+					/>
+					<span
+						class="text-danger"
+						*ngIf="
+						signUpSubmitted &&
+						signUpForm.controls['password'].errors &&
+						signUpForm.controls['password'].errors['required']
+						"
+          			>
+					password is required
+					</span>
+					<span
+						class="text-danger"
+						*ngIf="
+						signUpSubmitted &&
+						signUpForm.controls['password'].errors &&
+						signUpForm.controls['password'].errors['minlength']
+						"
+          			>
+					password must have atleast 8 characters
+					</span>
+					<div class="alert alert-danger" *ngIf="showSignUpError" role="alert">
+						{{ signUpError }}
+					</div>
+					<button type="submit">Sign up</button>
+				</form>
+			</div>
+
+			<div class="login">
+				<form (ngSubmit)="signIn()" [formGroup]="signInForm">
+					<label for="chk" aria-hidden="true">Login</label>
+					<input
+					required
+					type="email"
+					placeholder="Enter email"
+					name="email"
+					formControlName="email"
+					(keyup)="changeSignInInput()"
+					/>
+					<span
+						class="text-danger"
+						*ngIf="
+						signInSubmitted &&
+						signInForm.controls['email'].errors &&
+						signInForm.controls['email'].errors['required']
+						"
+					>
+						email is required
+					</span>
+					<span
+						class="text-danger"
+						*ngIf="
+						signInSubmitted &&
+						signInForm.controls['email'].errors &&
+						signInForm.controls['email'].errors['email']
+						"
+					>
+						email is invalid
+					</span>
+					<input
+						required
+						type="password"
+						placeholder="Password"
+						name="password"
+						formControlName="password"
+						(keyup)="changeSignInInput()"
+					/>
+					<span
+						class="text-danger"
+						*ngIf="
+						signInSubmitted &&
+						signInForm.controls['password'].errors &&
+						signInForm.controls['password'].errors['required']
+						"
+					>
+					password is required
+					</span>
+					<div class="alert alert-danger" *ngIf="showSignInError" role="alert">
+						{{ signInError }}
+					  </div>
+
+					<button type="submit">Login</button>
+				</form>
+			</div>
+	</div>
+</body>

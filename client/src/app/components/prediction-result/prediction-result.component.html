@@ -1,0 +1,29 @@
+<div class="predictionResultDiv">
+  <div class="predictionResultSubDiv container-fluid">
+    <h6 class="period">
+      Predicted for {{ numericalValue + " " }}{{ periodicity }}
+    </h6>
+    <div class="row">
+      <div class="col-lg-12 canvasDiv">
+        <div>
+          <canvas id="barPlot" data="barChart"></canvas>
+          <br />
+          <canvas id="linePlot" data="lineChart"></canvas>
+          <br />
+        </div>
+      </div>
+      <div class="col-lg-12 metricsDiv">
+        <h4 class="metrics-heading">Metrics</h4>
+        <div class="card">
+          <div class="card-body">
+            <h6><b>Mean Absolute Percentage Error : </b>{{ mape }}%</h6>
+            <h6><b>Mean Absolute Error : </b>{{ mae }}</h6>
+            <h6><b>Root Mean Square Error : </b>{{ rmse }}</h6>
+            <h6><b>Mean Squared Error : </b>{{ mse }}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
