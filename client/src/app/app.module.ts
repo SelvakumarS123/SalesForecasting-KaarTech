@@ -4,13 +4,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { UserAccessComponent } from './components/user-access/user-access.component';
-import { PredictDatasetComponent } from './components/predict-dataset/predict-dataset.component';
-import { PredictionResultComponent } from './components/prediction-result/prediction-result.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { PredictionComponent } from './components/prediction/prediction.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthGuard } from './authguard.service';
 import { LoggedInAuthGuard } from './loggedInAuthGuard.service';
-import { PredictionResultAuthGuard } from './predictionResultAuthGuard.service';
+import { PredictionAuthGuard } from './predictionAuthGuard.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -18,8 +18,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [
     AppComponent,
     UserAccessComponent,
-    PredictDatasetComponent,
-    PredictionResultComponent,
+    DashboardComponent,
+    PredictionComponent,
   ],
   imports: [
     FormsModule,
@@ -30,7 +30,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgbModule,
     BrowserAnimationsModule,
   ],
-  providers: [AuthGuard, LoggedInAuthGuard, PredictionResultAuthGuard],
+  providers: [AuthGuard, LoggedInAuthGuard, PredictionAuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

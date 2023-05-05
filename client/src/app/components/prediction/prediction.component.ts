@@ -12,12 +12,12 @@ import { Subscription } from 'rxjs';
 import { FlaskapiService } from 'src/app/flaskapi.service';
 
 @Component({
-  selector: 'app-prediction-result',
-  templateUrl: './prediction-result.component.html',
-  styleUrls: ['./prediction-result.component.css'],
+  selector: 'app-prediction',
+  templateUrl: './prediction.component.html',
+  styleUrls: ['./prediction.component.css'],
   providers: [FlaskapiService],
 })
-export class PredictionResultComponent implements OnInit {
+export class PredictionComponent implements OnInit {
   predicted_date: any = [];
   predicted_column: any = [];
   mae: Number;
@@ -208,6 +208,4 @@ export class PredictionResultComponent implements OnInit {
       },
     });
   }
-
-
 }

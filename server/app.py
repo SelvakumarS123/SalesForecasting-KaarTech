@@ -73,7 +73,6 @@ def postPrediction(email):
         new_data = pd.DataFrame(new_data[predictColumn].resample(freq).mean())
         new_data = new_data.interpolate(method = 'linear')
 
-        #Method to Checking for Stationary: A stationary process has the property that the mean, variance and autocorrelation structure do not change over time.
         train, test, validation = np.split(new_data[predictColumn].sample(frac = 1), [int(.6*len(new_data[predictColumn])), int(.8*len(new_data[predictColumn]))])
         print('Train Dataset')
         print(train)
@@ -82,7 +81,6 @@ def postPrediction(email):
         print('Validation Dataset')
         print(validation)
 
-        #SARIMA MODEL
         mod = sm.tsa.statespace.SARIMAX(new_data,
                                 order=(1, 1, 1),
                                 seasonal_order=(1, 1, 1, 12),

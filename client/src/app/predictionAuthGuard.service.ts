@@ -8,7 +8,7 @@ import {
 } from '@angular/router';
 
 @Injectable()
-export class PredictionResultAuthGuard implements CanActivate {
+export class PredictionAuthGuard implements CanActivate {
   constructor(private router: Router) {}
   isLoggedIn: Boolean;
 
@@ -19,7 +19,7 @@ export class PredictionResultAuthGuard implements CanActivate {
     ) {
       return true;
     }
-    this.router.navigate(['/predict-dataset']);
+    this.router.navigate(['/dashboard']);
     return false;
   }
 }

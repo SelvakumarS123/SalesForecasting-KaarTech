@@ -32,18 +32,15 @@ export class FlaskapiService {
       formData
     );
   }
- 
-  public deletePrediction(dateAndTime: any, email: any) {
-    return this.httpClient.delete<any>(
-      this.server + `deletePrediction/${dateAndTime}/${email}`
-    );
-  }
   public signIn(signInFormData: SignInData) {
     const formData: FormData = new FormData();
     const { email, password } = signInFormData;
     formData.append('email', email);
     formData.append('password', password);
-    return this.httpClient.post<SignInData>(this.server + 'sign-in', formData);
+    var tmp = this.httpClient.post<SignInData>(this.server + 'sign-in', formData);
+    console.log("sign-in by selva");
+    console.log(tmp);
+    return tmp;
   }
   public signUp(signUpFormData: SignUpData) {
     const { fullName, email, password } = signUpFormData;

@@ -77,7 +77,7 @@ export class UserAccessComponent implements OnInit {
               'email',
               response['data']['userInfo']['email']
             );
-            this.router.navigate(['prediction-dashboard']);
+            this.router.navigate(['dashboard']);
           },
           error: (error) => {
             this.signInError = error['error']['text'];

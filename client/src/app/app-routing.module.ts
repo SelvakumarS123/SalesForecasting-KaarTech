@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserAccessComponent } from './components/user-access/user-access.component';
-import { PredictDatasetComponent } from './components/predict-dataset/predict-dataset.component';
-import { PredictionResultComponent } from './components/prediction-result/prediction-result.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { PredictionComponent } from './components/prediction/prediction.component';
 import { AuthGuard } from './authguard.service';
 import { LoggedInAuthGuard } from './loggedInAuthGuard.service';
-import { PredictionResultAuthGuard } from './predictionResultAuthGuard.service';
+import { PredictionAuthGuard } from './predictionAuthGuard.service';
 
 const routes: Routes = [
   {
-    path: 'prediction-dashboard',
-    component: PredictDatasetComponent,
+    path: 'dashboard',
+    component: DashboardComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: 'prediction-result',
-    component: PredictionResultComponent,
-    canActivate: [PredictionResultAuthGuard],
+    path: 'prediction',
+    component: PredictionComponent,
+    canActivate: [PredictionAuthGuard],
   },
   {
     path: '',

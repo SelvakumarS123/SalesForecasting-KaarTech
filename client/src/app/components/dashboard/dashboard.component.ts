@@ -12,17 +12,17 @@ import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-predict-dataset',
-  templateUrl: './predict-dataset.component.html',
-  styleUrls: ['./predict-dataset.component.css'],
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css'],
   providers: [FlaskapiService],
 })
-export class PredictDatasetComponent implements OnInit {
+export class DashboardComponent implements OnInit {
   public signOutSubscription: Subscription;
   isLoggedIn: boolean;
   fullName: any;
   email: any;
-  public predictDatasetSubscription: Subscription;
+  public DashboardSubscription: Subscription;
   predictForm: FormGroup;
   submitted: boolean = false;
   formData: any;
@@ -61,8 +61,8 @@ export class PredictDatasetComponent implements OnInit {
     if (this.signOutSubscription) {
       this.signOutSubscription.unsubscribe();
     }
-    if (this.predictDatasetSubscription) {
-      this.predictDatasetSubscription.unsubscribe();
+    if (this.DashboardSubscription) {
+      this.DashboardSubscription.unsubscribe();
     }
   }
   getFile(event: any) {
@@ -77,11 +77,11 @@ export class PredictDatasetComponent implements OnInit {
         periodicity: this.predictForm.controls['periodicity'].value,
         numericalValue: this.predictForm.controls['numericalValue'].value,
       };
-      this.predictDatasetSubscription = this.flaskApiService
+      this.DashboardSubscription = this.flaskApiService
         .postData(this.formData, this.file, localStorage.getItem('email'))
         .subscribe((response) => {
           localStorage.setItem('show', 'true');
-          this.router.navigate(['/prediction-result']);
+          this.router.navigate(['/prediction']);
           this.submitted = false;
         });
     }
