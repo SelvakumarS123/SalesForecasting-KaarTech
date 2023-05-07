@@ -6,7 +6,6 @@ from http.client import HTTPException
 from flask import Flask,request,jsonify,session
 import json
 from flask_cors import CORS
-
 import pandas as pd
 import numpy as np
 import warnings
@@ -23,7 +22,6 @@ import warnings
 from statsmodels.tools.sm_exceptions import ConvergenceWarning
 warnings.simplefilter('ignore', ConvergenceWarning)
 
-
 mongoDB=pymongo.MongoClient('mongodb+srv://SelvakumarS:KFJQZMw3t0uDtgLW@salesprediction.4kbkxse.mongodb.net/?retryWrites=true&w=majority')
 db=mongoDB['SalesPrediction']
 account=db.account
@@ -32,8 +30,6 @@ app=Flask(__name__)
 app.secret_key='\xdaDZP\xe5iV\xb6\xb9\xe3\xdc\x9d\xd5\xec\\@\xa5\xa3l\xf2\xfdO\x8fI'
 CORS(app)
 
-
-            
 @app.route("/getPredictions/<email>",methods=["POST"])
 def postPrediction(email):
     print(request.files['file'])
@@ -41,8 +37,7 @@ def postPrediction(email):
         file=request.files['file']
         predictColumn=request.form.get('predictColumn')
         periodicity=request.form.get('periodicity')
-        numbericalValue=request.form.get('numericalValue')
-        
+        numbericalValue=request.form.get('numericalValue') 
         if(periodicity=='Yearly'):
             freq='Y'
         elif(periodicity=='Monthly'):
@@ -171,13 +166,11 @@ def signUp():
             return start_session(userInfo)     
     return 'signup failed'
 
-
 @app.route('/logout/',methods=["GET"])
 def signout():
     if request.method=="GET":
         session.clear()
     return jsonify("logout successful")
-
 
 if __name__=="__main__":
     app.run(debug=True)

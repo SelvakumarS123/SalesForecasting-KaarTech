@@ -110,7 +110,7 @@ export class UserAccessComponent implements OnInit {
               'email',
               response['data']['userInfo']['email']
             );
-            this.router.navigate(['/']);
+            this.router.navigate(['/dashboard']);
           },
           error: (error) => {
 
