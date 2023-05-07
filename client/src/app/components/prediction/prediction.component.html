@@ -1,8 +1,5 @@
-<h6 class="period">
-  Predicted for {{ numericalValue + " " }}{{ periodicity }}
-</h6>
-<div class="row">
-  <div class="col-lg-12 canvasDiv">
+<div class="row" style="margin-top: 3em; margin-bottom: 3em;">
+  <div class="col-lg-12" style="padding-right: 3em;">
     <div>
       <canvas id="barPlot" data="barChart"></canvas>
       <br />
@@ -10,15 +7,13 @@
       <br />
     </div>
   </div>
-  <div class="col-lg-12 metricsDiv">
-    <h4 class="metrics-heading">Metrics</h4>
-    <div class="card">
-      <div class="card-body">
+  <div class="col-lg-12">
+    <h4 style="  text-align: center; margin-bottom: 1em;">Metrics</h4>
+    <div style="line-height: 23px; text-align: center; margin-top: 2em; margin-bottom: 2em;">
         <h6><b>Mean Absolute Percentage Error : </b>{{ mape }}%</h6>
         <h6><b>Mean Absolute Error : </b>{{ mae }}</h6>
         <h6><b>Root Mean Square Error : </b>{{ rmse }}</h6>
         <h6><b>Mean Squared Error : </b>{{ mse }}</h6>
-      </div>
     </div>
   </div>
 </div>
