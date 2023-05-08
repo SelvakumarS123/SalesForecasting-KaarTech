@@ -1,13 +1,13 @@
 import {
   Component,
   OnInit,
-  Input,
-  ViewChild,
-  OnDestroy,
+  // Input,
+  // ViewChild,
+  // OnDestroy,
 } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { FlaskapiService } from 'src/app/flaskapi.service';
 
@@ -35,7 +35,7 @@ export class PredictionComponent implements OnInit {
   constructor(
     private router: Router,
     private flaskApiService: FlaskapiService,
-    private modalService: NgbModal,
+    // private modalService: NgbModal,
   ) {
     Chart.register(...registerables);
   }

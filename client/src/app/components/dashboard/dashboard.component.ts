@@ -1,9 +1,9 @@
 import {
   Component,
-  EventEmitter,
+  // EventEmitter,
   OnInit,
-  Output,
-  ViewChild,
+  // Output,
+  // ViewChild,
 } from '@angular/core';
 import { GetData } from 'src/app/models/GetData';
 import { FlaskapiService } from 'src/app/flaskapi.service';
@@ -79,7 +79,7 @@ export class DashboardComponent implements OnInit {
       };
       this.DashboardSubscription = this.flaskApiService
         .postData(this.formData, this.file, localStorage.getItem('email'))
-        .subscribe((response) => {
+        .subscribe(() => {
           localStorage.setItem('show', 'true');
           this.router.navigate(['/prediction']);
           this.submitted = false;
@@ -90,10 +90,11 @@ export class DashboardComponent implements OnInit {
   signOut() {
     this.signOutSubscription = this.flaskApiService
       .signOut()
-      .subscribe((response) => {
+      .subscribe(() => {
         localStorage.setItem('isLoggedIn', 'false');
         localStorage.setItem('email', '');
-        localStorage.setItem('show', 'false');
+        // localStorage.setItem('show', 'false');
+        // console.log(localStorage.getItem('show'));
         localStorage.setItem('name', '');
         this.router.navigate(['']);
       });

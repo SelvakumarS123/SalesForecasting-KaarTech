@@ -39,14 +39,14 @@ def postPrediction(email):
         periodicity=request.form.get('periodicity')
         numbericalValue=request.form.get('numericalValue') 
         if(periodicity=='Yearly'):
-            freq='Y'
+            frequency='Y'
         elif(periodicity=='Monthly'):
-            freq='M'
+            frequency='M'
         elif(periodicity=='Weekly'):
-            freq='W'
+            frequency='W'
         else:
-            freq='D'
-
+            frequency='D'
+            
         data=pd.read_csv(file, encoding='Latin-1')
         to_drop = ['ADDRESS_LINE2','STATE','POSTAL_CODE','TERRITORY','PRODUCT_CODE','CUSTOMER_NAME','PHONE','ADDRESS_LINE1','CITY','CONTACT_LAST_NAME','CONTACT_FIRST_NAME']
         data = data.drop(to_drop, axis = 1)
@@ -65,7 +65,7 @@ def postPrediction(email):
         df.sort_values(by = ['ORDER_DATE'], inplace = True, ascending = True)
         df.set_index('ORDER_DATE', inplace = True)
         new_data = pd.DataFrame(df[predictColumn])
-        new_data = pd.DataFrame(new_data[predictColumn].resample(freq).mean())
+        new_data = pd.DataFrame(new_data[predictColumn].resample(frequency).mean())
         new_data = new_data.interpolate(method = 'linear')
 
         train, test, validation = np.split(new_data[predictColumn].sample(frac = 1), [int(.6*len(new_data[predictColumn])), int(.8*len(new_data[predictColumn]))])
@@ -82,7 +82,9 @@ def postPrediction(email):
                                 enforce_invertibility=False)
         results = mod.fit()
         pred = results.get_prediction()
-        if(freq=='D'):
+        # print("123456789098765432123456789009876543212345678987654345678")
+        # print(pred)
+        if(frequency=='D'):
             pred = results.get_prediction(start=pd.to_datetime('2003-01-06'), dynamic=False)
         pred.conf_int()
         y_forecasted = pred.predicted_mean

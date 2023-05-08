@@ -2,10 +2,10 @@ import { Component, ElementRef, OnInit, ViewChild,HostListener, } from '@angular
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthGuard } from 'src/app/authguard.service';
+// import { AuthGuard } from 'src/app/authguard.service';
 import { FlaskapiService } from 'src/app/flaskapi.service';
-import { SignInData } from 'src/app/models/SignInData';
-import { SignUpData } from 'src/app/models/SignUpData';
+// import { SignInData } from 'src/app/models/SignInData';
+// import { SignUpData } from 'src/app/models/SignUpData';
 
 @Component({
   selector: 'app-user-access',
@@ -14,9 +14,12 @@ import { SignUpData } from 'src/app/models/SignUpData';
   providers: [FlaskapiService],
 })
 export class UserAccessComponent implements OnInit {
-  public signInSubscription: Subscription;
+  public signInSubscription: Subscription; 
+  // The Subscription type is part of the RxJS library, which is often used in Angular applications 
+  // for handling asynchronous operations. A Subscription object represents a disposable resource, such as an Observable stream,
+  //  and can be used to unsubscribe from the resource when it is no longer needed.
   public signUpSubscription: Subscription;
-  signInForm: FormGroup;
+  signInForm: FormGroup; // used to create and manage reactive forms in Angular.
   signInFormData: any;
   signUpForm: FormGroup;
   signUpFormData: any;
@@ -55,6 +58,41 @@ export class UserAccessComponent implements OnInit {
       this.signUpSubscription.unsubscribe();
     }
   }
+
+  signUp() {
+    this.signUpSubmitted = true;
+    if (this.signUpForm.valid) {
+      this.signUpFormData = {
+        fullName: this.signUpForm.controls['fullName'].value,
+        email: this.signUpForm.controls['email'].value,
+        password: this.signUpForm.controls['password'].value,
+      };
+      this.signUpSubscription = this.flaskApiService
+        .signUp(this.signUpFormData)
+        .subscribe({
+          next: (response) => {
+            this.showSignUpError = false;
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem(
+              'name',
+              response['data']['userInfo']['fullName']
+            );
+
+            localStorage.setItem(
+              'email',
+              response['data']['userInfo']['email']
+            );
+            this.router.navigate(['/dashboard']);
+          },
+          error: (error) => {
+            this.signUpError = error['error']['text'];
+            this.showSignUpError = true;
+          },
+        });
+      this.signUpSubmitted = false;
+    }
+  }
+
   signIn() {
     this.signInSubmitted = true;
     if (this.signInForm.valid) {
@@ -87,40 +125,7 @@ export class UserAccessComponent implements OnInit {
       this.signInSubmitted = false;
     }
   }
-  signUp() {
-    this.signUpSubmitted = true;
-    if (this.signUpForm.valid) {
-      this.signUpFormData = {
-        fullName: this.signUpForm.controls['fullName'].value,
-        email: this.signUpForm.controls['email'].value,
-        password: this.signUpForm.controls['password'].value,
-      };
-      this.signUpSubscription = this.flaskApiService
-        .signUp(this.signUpFormData)
-        .subscribe({
-          next: (response) => {
-            this.showSignUpError = false;
-            localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem(
-              'name',
-              response['data']['userInfo']['fullName']
-            );
 
-            localStorage.setItem(
-              'email',
-              response['data']['userInfo']['email']
-            );
-            this.router.navigate(['/dashboard']);
-          },
-          error: (error) => {
-
-            this.signUpError = error['error']['text'];
-            this.showSignUpError = true;
-          },
-        });
-      this.signUpSubmitted = false;
-    }
-  }
   changeSignInInput() {
     this.showSignInError = false;
   }

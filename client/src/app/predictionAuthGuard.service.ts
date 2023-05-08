@@ -14,8 +14,9 @@ export class PredictionAuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (
-      localStorage.getItem('isLoggedIn') == 'true' &&
-      localStorage.getItem('show') == 'true'
+      localStorage.getItem('isLoggedIn') == 'true'
+      //  &&
+      // localStorage.getItem('show') == 'true'
     ) {
       return true;
     }
