@@ -20,6 +20,7 @@ from sklearn import metrics
 from passlib.hash import  pbkdf2_sha256
 import warnings
 from statsmodels.tools.sm_exceptions import ConvergenceWarning
+from statsmodels.tsa.stattools import adfuller
 warnings.simplefilter('ignore', ConvergenceWarning)
 
 mongoDB=pymongo.MongoClient('mongodb+srv://SelvakumarS:KFJQZMw3t0uDtgLW@salesprediction.4kbkxse.mongodb.net/?retryWrites=true&w=majority')
@@ -48,25 +49,50 @@ def postPrediction(email):
             frequency='D'
             
         data=pd.read_csv(file, encoding='Latin-1')
-        to_drop = ['ADDRESS_LINE2','STATE','POSTAL_CODE','TERRITORY','PRODUCT_CODE','CUSTOMER_NAME','PHONE','ADDRESS_LINE1','CITY','CONTACT_LAST_NAME','CONTACT_FIRST_NAME']
+
+        to_drop = ['STATUS','PRODUCT_LINE','MSRP','PRODUCT_CODE','ADDRESS_LINE2','STATE','POSTAL_CODE',
+                   'TERRITORY','PRODUCT_CODE','CUSTOMER_NAME','PHONE','ADDRESS_LINE1','CITY',
+                   'CONTACT_LAST_NAME','CONTACT_FIRST_NAME'] #
         data = data.drop(to_drop, axis = 1)
-        data['STATUS'].unique()
-        data['STATUS'] = pd.factorize(data.STATUS)[0] + 1
-        data['PRODUCT_LINE'].unique()
-        data['PRODUCT_LINE'] = pd.factorize(data.PRODUCT_LINE)[0] + 1
-        data['COUNTRY'].unique()
-        data['COUNTRY'] = pd.factorize(data.COUNTRY)[0] + 1
         data['DEAL_SIZE'].unique()
         data['DEAL_SIZE'] = pd.factorize(data.DEAL_SIZE)[0] + 1
-        data['ORDER_DATE'] = pd.to_datetime(data['ORDER_DATE'])
-        df = pd.DataFrame(data)
+        data['ORDER_DATE'] = pd.to_datetime(data['ORDER_DATE']) #
+
+        # data.head()
+        # data.tail()
+        # data.columns=["Month","Sales"]
+        # # data.head()
+        # data.drop(106,axis=0,inplace=True)
+        # # data.tail()
+        # # data = data.drop(to_drop, axis = 1)
+        # data.drop(105,axis=0,inplace=True)
+        # # data.tail()
+        # data['Month']=pd.to_datetime(data['Month'])
+        # # data.head()
+        # data.set_index('Month',inplace=True)
+        # # data.head()
+        # # data.describe()
+        # new_data = pd.DataFrame(data[predictColumn]) #p
+        # test_result=adfuller(data['Sales'])
+        # def adfuller_test(sales):
+        #     result=adfuller(sales)
+        #     labels = ['ADF Test Statistic','p-value','#Lags Used','Number of Observations Used']
+        #     for value,label in zip(result,labels):
+        #         print(label+' : '+str(value) )
+        #     if result[1] <= 0.05:
+        #         print("Data is stationary")
+        #     else:
+        #         print("Data is non-stationary")
+        # adfuller_test(data['Sales'])
+
+        df = pd.DataFrame(data) #
         data.sort_values(by = ['ORDER_DATE'], inplace = True)
         data.set_index('ORDER_DATE', inplace = True)
         df.sort_values(by = ['ORDER_DATE'], inplace = True, ascending = True)
         df.set_index('ORDER_DATE', inplace = True)
         new_data = pd.DataFrame(df[predictColumn])
         new_data = pd.DataFrame(new_data[predictColumn].resample(frequency).mean())
-        new_data = new_data.interpolate(method = 'linear')
+        new_data = new_data.interpolate(method = 'linear') #
 
         train, test, validation = np.split(new_data[predictColumn].sample(frac = 1), [int(.6*len(new_data[predictColumn])), int(.8*len(new_data[predictColumn]))])
         print('Train Dataset')
@@ -82,8 +108,6 @@ def postPrediction(email):
                                 enforce_invertibility=False)
         results = mod.fit()
         pred = results.get_prediction()
-        # print("123456789098765432123456789009876543212345678987654345678")
-        # print(pred)
         if(frequency=='D'):
             pred = results.get_prediction(start=pd.to_datetime('2003-01-06'), dynamic=False)
         pred.conf_int()
